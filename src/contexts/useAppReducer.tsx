@@ -10,74 +10,81 @@ const fetchDirectory = (path: string): Promise<string[][]> =>
 
 // Initial state
 const initialState: AppStore = {
-	currentRoute: 1,
-	navigationPath: {
+	router: {
+		current: 1,
+	},
+	navigation: {
 		path: "D:\\User\\Fordread\\Downloads",
 		level: -1,
 	},
-	profiles: { profileList: profileData as ProfileList[], selectedProfile: 1 },
-	fileList: [],
-	appSettings: {},
-	activityLog: [],
+	userProfiles: {
+		profileList: profileData as ProfileList[],
+		selectedProfile: 1,
+	},
+	fileSystem: {
+		fileList: [],
+	},
 };
 
 const useAppReducer = () => {
 	const [state, dispatch] = useReducer(appReducer, initialState);
-	const [isPending, startTransition] = useTransition();
+	const [isTransitionPending, startTransition] = useTransition();
 
-	// Navigation functions
+	// ! ROUTER
 	const navigateToRoute = (route: number) =>
 		dispatch({ type: "NAVIGATE", payload: route });
 
-	const updateDirectory = async () => {
-		const directory = await fetchDirectory(state.navigationPath.path);
+	// ! FILE SYSTEM
+	const refreshDirectoryContents = async () => {
+		const directory = await fetchDirectory(state.navigation.path);
 		dispatch({ type: "SET_FILE_LIST", payload: directory });
 	};
-	const updateDirectoryWithTransition = () => {
-		if (!state.navigationPath.path) return;
-		startTransition(updateDirectory);
+	const refreshDirectoryContentsWithTransition = () => {
+		if (!state.navigation.path) return;
+		startTransition(refreshDirectoryContents);
 	};
 
-	// Navigation path functions
+	// ! NAVIGATION DIRECTORY
 	const updateNavigationPath = (folder: string) =>
 		dispatch({ type: "UPDATE_NAVIGATION_PATH", payload: folder });
-	const navigateBack = (levels: number) =>
+	const navigateBackByLevels = (levels: number) =>
 		dispatch({ type: "NAVIGATE_BACK", payload: levels });
 
-	const changeProfile = (selectedProfile: number) => {
+	// ! USER_PROFILE
+	const switchProfile = (selectedProfile: number) => {
 		dispatch({ type: "CHANGE_PROFILE", payload: selectedProfile });
 	};
 
-	// File handling functions
-	// const addFile = (file: string) =>
-	// 	dispatch({ type: "ADD_FILE", payload: file });
-	// const removeFile = (fileName: string) =>
-	// 	dispatch({ type: "REMOVE_FILE", payload: fileName });
-	// Settings functions
-	// const updateSettings = (newSettings: object) =>
-	// 	dispatch({ type: "UPDATE_SETTINGS", payload: newSettings });
-
-	// Activity log functions
-	// const logActivity = (activity: string) =>
-	// 	dispatch({ type: "LOG_ACTIVITY", payload: activity });
-
 	useEffect(() => {
 		const id = setTimeout(() => {
-			updateDirectoryWithTransition();
+			refreshDirectoryContentsWithTransition();
 		}, 0);
 		return () => {
 			clearTimeout(id);
 		};
-	}, [state.navigationPath]);
+	}, [state.navigation]);
 
 	return {
-		...state,
-		isPending,
-		navigateToRoute,
-		updateDirectory,
-		updateNavigationPath,
-		navigateBack,
-		changeProfile,
+		// ...state,
+		router: {
+			...state.router,
+			navigateToRoute,
+		},
+		navigation: {
+			...state.navigation,
+			updateNavigationPath,
+			navigateBackByLevels,
+		},
+		fileSystem: {
+			...state.fileSystem,
+			refreshDirectoryContents,
+			isTransitionPending,
+		},
+		userProfiles: {
+			switchProfile,
+			...state.userProfiles,
+		}, // userProfiles
+
 		// addFile,
 		// removeFile,
 		// updateSettings,

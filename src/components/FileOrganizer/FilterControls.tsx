@@ -1,7 +1,7 @@
 import { GrFilter } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
 import Button from "./Button";
-import useAppContext from "@hooks/useAppContext";
+import useUserProfiles from "@hooks/useUserProfiles";
 
 interface FilterControlsProps {
 	applyFileFilter: () => void;
@@ -14,11 +14,8 @@ const FilterControls = ({
 	applyFileFilter,
 	toggleSettingsModal,
 }: FilterControlsProps) => {
-	const {
-		profiles: { profileList, selectedProfile },
-		changeProfile,
-	} = useAppContext();
-	
+	const { profileList, selectedProfile, switchProfile } = useUserProfiles();
+
 	return (
 		<ul className="flex h-8 gap-2">
 			<li className="flex-1">
@@ -34,7 +31,7 @@ const FilterControls = ({
 					onChange={(e) => {
 						// console.log();
 
-						changeProfile(Number(e.target.value));
+						switchProfile(Number(e.target.value));
 					}}
 				>
 					<optgroup label="Select a Profile" className="bg-white italic">

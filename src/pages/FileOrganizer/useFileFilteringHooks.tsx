@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import useAppContext from "@hooks/useAppContext";
+import useUserProfiles from "@/hooks/useUserProfiles";
 import { AppStore } from "./types";
 // import filtersData from "../../assets/filters.json";
 import { filterFiles } from "./filterFiles";
+import useFileSystem from "@/hooks/useFileSystem";
 
 // const filterCriteriaList = filtersData as FilterCriteria[];
 
 const useFileFilteringHooks = () => {
-	const {
-		fileList,
-		profiles: { profileList, selectedProfile },
-	} = useAppContext();
+	const { profileList, selectedProfile } = useUserProfiles();
+	const { fileList } = useFileSystem();
 	const [{ info, allFiles, currentFilterIndex }, setState] = useState<AppStore>(
 		{
 			info: profileList[selectedProfile].filters.map((criteria) => ({

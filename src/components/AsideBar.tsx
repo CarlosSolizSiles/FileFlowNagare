@@ -4,7 +4,7 @@ import {
 	HiOutlineArchive,
 	HiOutlineCog,
 } from "react-icons/hi";
-import useAppContext from "@hooks/useAppContext";
+import useRouter from "@/hooks/useRouter";
 
 const optionsMenu = [
 	{ length: 126, text: "Inicio", Icon: HiOutlineHome },
@@ -14,7 +14,7 @@ const optionsMenu = [
 ];
 
 const AsideBar = () => {
-	const { currentRoute, navigateToRoute } = useAppContext();
+	const { current: currentRoute, navigateToRoute } = useRouter();
 	return (
 		<nav>
 			<ul className="flex">

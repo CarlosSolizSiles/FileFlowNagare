@@ -15,18 +15,20 @@ export interface ProfileList {
 }
 
 export interface AppStore {
-	currentRoute: number;
-	navigationPath: {
+	router: {
+		current: number;
+	};
+	navigation: {
 		path: string;
 		level: number;
 	};
-	profiles: {
+	fileSystem: {
+		fileList: string[][];
+	};
+	userProfiles: {
 		profileList: ProfileList[];
 		selectedProfile: number;
 	};
-	fileList: string[][];
-	appSettings: {};
-	activityLog: never[][];
 }
 
 // let a = [

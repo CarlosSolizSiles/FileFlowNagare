@@ -1,4 +1,4 @@
-import useAppContext from "@hooks/useAppContext";
+import useRouter from "@/hooks/useRouter";
 
 /**
  * pages
@@ -10,7 +10,7 @@ import History from "@/pages/History";
 import Settings from "@/pages/Settings";
 
 const Router = () => {
-	const { currentRoute } = useAppContext();
+	const { current: currentRoute } = useRouter();
 	const MathRouters = [Home, FileOrganizer, History, Settings][currentRoute];
 
 	return <MathRouters></MathRouters>;

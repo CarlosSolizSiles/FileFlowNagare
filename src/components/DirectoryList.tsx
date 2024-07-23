@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import useAppContext from "@hooks/useAppContext";
 import { AiFillFile, AiFillFolder } from "react-icons/ai";
+import useNavigation from "@/hooks/useNavigation";
+import useFileSystem from "@/hooks/useFileSystem";
 
 const DirectoryItem = ({
 	name,
@@ -9,7 +10,7 @@ const DirectoryItem = ({
 	name: string;
 	isFolder: boolean;
 }) => {
-	const { updateNavigationPath } = useAppContext();
+	const { updateNavigationPath } = useNavigation();
 	return (
 		<li
 			className="h-8 w-full overflow-hidden text-ellipsis text-nowrap rounded-md bg-neutral-700 pr-2 shadow-lg"
@@ -48,7 +49,7 @@ const renderDirectoryItems = (files: string[][], maxShowItems: number) => {
 };
 
 const DirectoryList = () => {
-	const { fileList } = useAppContext();
+	const { fileList } = useFileSystem();
 	const [maxShowItems, setMaxShowItems] = useState(100);
 
 	const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {

@@ -1,0 +1,38 @@
+[
+	{
+		"directoryPath": "path/to/Imagenes",
+		"fileExtensions": [".png", ".jpg", ".webp"],
+		"searchPatterns": [
+			"\\d{4}-\\d{2}-\\d{2}",
+			"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+		],
+		"requiredField": "extensions"
+	},
+	{
+		"directoryPath": "path/to/Documentos",
+		"fileExtensions": [".txt", ".pdf", ".docx", ".doc"],
+		"searchPatterns": [
+			"\\d{4}-\\d{2}-\\d{2}",
+			"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+		],
+		"requiredField": "extensions"
+	},
+	{
+		"directoryPath": "path/to/Video",
+		"fileExtensions": [".mp4"],
+		"searchPatterns": [
+			"\\d{4}-\\d{2}-\\d{2}",
+			"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+		],
+		"requiredField": "extensions"
+	},
+	{
+		"directoryPath": "path/to/Zip",
+		"fileExtensions": [".rar", ".zip"],
+		"searchPatterns": [
+			"\\d{4}-\\d{2}-\\d{2}",
+			"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+		],
+		"requiredField": "extensions"
+	}
+]

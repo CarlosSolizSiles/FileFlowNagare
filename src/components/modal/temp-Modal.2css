@@ -1,0 +1,38 @@
+@keyframes blurFadeIn {
+	0% {
+		--modal-transform: translateY(0%);
+		--modal-top: 100%;
+	}
+	100% {
+		background-color: rgb(0, 0, 0, 0.2) /* #262626 */;
+		--modal-transform: translateY(-50%);
+		--modal-top: 50%;
+	}
+}
+
+.modal-animation {
+	animation: blurFadeIn 500ms linear forwards normal;
+}
+
+.modal-animation-reverse {
+	animation-direction: reverse;
+}
+
+[data-modal] {
+	position: absolute;
+	left: 50%;
+	top: var(--modal-top);
+	transform: var(--modal-transform) translateX(-50%);
+}
+
+@property --modal-transform {
+	syntax: "<transform-list>";
+	inherits: true;
+	initial-value: translateY(0%);
+}
+
+@property --modal-top {
+	syntax: "<percentage>";
+	inherits: true;
+	initial-value: 100%;
+}

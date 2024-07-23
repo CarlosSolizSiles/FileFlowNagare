@@ -1,0 +1,44 @@
+import { useState } from "react";
+import "./Modal.css";
+
+interface Props {
+	children?: React.ReactNode;
+	className?: string | undefined;
+	disabled: boolean;
+	onClick: () => void;
+}
+
+const Modal = ({ children, disabled, onClick, className }: Props) => {
+	const [transition, setTransition] = useState(true);
+
+	const handleTransition = () => {
+		if (transition) return;
+		onClick();
+		setTransition(true);
+	};
+
+	const handleOnClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		let target = (e.target as Element).closest("[data-closed-modal]");
+
+		if (target) {
+			setTransition(false);
+		}
+	};
+
+	if (disabled) return <></>;
+
+	return (
+		<div
+			key={transition ? "modal-open" : "modal-close"}
+			className={`modal-animation absolute left-0 top-0 z-50 h-full w-full overflow-hidden ${!transition ? "modal-animation-reverse" : ""}`}
+			onAnimationEnd={handleTransition}
+			onClick={handleOnClick}
+		>
+			<div className={className} data-modal>
+				{children}
+			</div>
+		</div>
+	);
+};
+
+export default Modal;

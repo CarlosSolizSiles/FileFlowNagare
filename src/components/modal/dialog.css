@@ -1,0 +1,42 @@
+.dialog {
+	max-height: 100vh;
+	max-width: 100vw;
+	margin: auto;
+	border-radius: 0.5rem;
+	background-color: rgb(64 64 64);
+	color: inherit;
+	box-shadow:
+		0 10px 15px -3px rgb(0 0 0 / 0.1),
+		0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+	transform: translateY(calc(50% + 50vh));
+	transition:
+		display 500ms,
+		overlay 500ms,
+		transform 500ms;
+
+	transition-timing-function: linear;
+	transition-behavior: allow-discrete;
+
+	&[open] {
+		transform: translateY(0%);
+
+		&::backdrop {
+			opacity: 1;
+		}
+
+		@starting-style {
+			transform: translateY(calc(50% + 50vh));
+			&::backdrop {
+				opacity: 0;
+			}
+		}
+	}
+
+	&::backdrop {
+		background-color: rgba(0, 0, 0, 0.2);
+		opacity: 0;
+		transition: opacity 500ms;
+		transition-timing-function: linear;
+	}
+}

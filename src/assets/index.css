@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	color-scheme: light dark;
+}
+
+body {
+	background-color: light-dark(
+		color-mix(in srgb, theme("colors.neutral.800") 95%, transparent),
+		theme("colors.neutral.800")
+	);
+	color: light-dark(theme("colors.gray.500"), theme("colors.neutral.800"));
+	@apply select-none max-h-screen h-screen overflow-hidden;
+}
+
+@keyframes animate_loading {
+	0% {
+		color: transparent;
+	}
+	50% {
+		color: transparent;
+	}
+	100% {
+		color: inherit;
+	}
+}
+
+.animate-loading {
+	animation-name: animate_loading;
+	animation-duration: 1s;
+	animation-timing-function: ease-in-out;
+}
+
+.scrollbar {
+	scrollbar-color: theme("colors.neutral.500") theme("colors.neutral.700");
+	scrollbar-width: thin;
+	scrollbar-gutter: stable;
+}
+
+.animation {
+	view-timeline-name: --subjectReveal;
+	animation-timeline: --subjectReveal;
+
+	animation-name: appear;
+	animation-fill-mode: both;
+	animation-duration: 1ms; /* Firefox requires this to apply the animation */
+}
+
+@keyframes appear {
+	0% {
+		opacity: 0;
+	}
+	40% {
+		opacity: 1;
+	}
+}

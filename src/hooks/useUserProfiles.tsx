@@ -1,8 +1,7 @@
-import { use } from "react";
-import AppContext from "@/contexts/AppContext";
+import useAppContext from "./useAppContext";
 
 const useUserProfiles = () => {
-	const { userProfiles } = use(AppContext);
+	const userProfiles = useAppContext("userProfiles");
 	return userProfiles;
 };
 

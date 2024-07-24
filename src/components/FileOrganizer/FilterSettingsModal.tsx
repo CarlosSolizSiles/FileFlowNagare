@@ -3,12 +3,20 @@ import Button from "./Button";
 import { CgClose } from "react-icons/cg";
 import Modal from "../modal/Modal";
 import NavigationPanel from "./NavigationPanel";
+import useFilterSettings from "@/hooks/useFilterSettings";
+import useUserProfiles from "@/hooks/useUserProfiles";
 
 interface FilterSettingsModalProps {
 	ref?: React.RefObject<HTMLDialogElement | null>;
 }
 
 const FilterSettingsModal = ({ ref }: FilterSettingsModalProps) => {
+	const { profileList } = useUserProfiles();
+	const { profile, currentProfile, setProfile, currentFilter, changeFilter } =
+		useFilterSettings();
+
+	const filter = profile?.filters.at(currentFilter);
+
 	return (
 		<Modal ref={ref} className="max-h-4/5 h-4/5 w-4/5 p-2">
 			<header className="flex h-8 w-full">
@@ -31,14 +39,21 @@ const FilterSettingsModal = ({ ref }: FilterSettingsModalProps) => {
 							<li className="mr-2 max-w-80 flex-1">
 								<select
 									className="h-7 w-full max-w-80 rounded-md bg-neutral-800 px-2 text-sm font-semibold outline-none"
-									defaultValue={1}
+									defaultValue={currentProfile}
 									id="select_profile"
+									onChange={(e) => {
+										setProfile(Number(e.target.value));
+									}}
 								>
 									<optgroup
 										label="Select a Profile"
 										className="bg-white italic"
 									>
-										<option value={1}>Classify Documents</option>
+										{profileList?.map(({ name }, i) => (
+											<option key={i} value={i}>
+												{name}
+											</option>
+										))}
 									</optgroup>
 								</select>
 							</li>
@@ -66,8 +81,20 @@ const FilterSettingsModal = ({ ref }: FilterSettingsModalProps) => {
 							</label>
 							<select
 								className="h-7 w-full max-w-72 flex-1 rounded-md bg-neutral-800 px-2 text-sm font-semibold outline-none"
+								defaultValue={currentFilter}
 								id="select_folder"
-							></select>
+								onChange={(e) => {
+									changeFilter(Number(e.target.value));
+								}}
+							>
+								{profile?.filters.map(({ name }, i) => {
+									return (
+										<option key={i} value={i} className="bg-white">
+											{name}
+										</option>
+									);
+								})}
+							</select>
 						</div>
 						<div className="flex">
 							<label htmlFor="directory_path" className="mr-2">
@@ -77,6 +104,7 @@ const FilterSettingsModal = ({ ref }: FilterSettingsModalProps) => {
 								type="text"
 								className="h-7 w-full max-w-72 flex-1 rounded-md bg-neutral-800 px-2 text-sm font-semibold outline-none"
 								id="directory_path"
+								value={filter?.directoryPath}
 							/>
 						</div>
 						<div>
@@ -85,16 +113,16 @@ const FilterSettingsModal = ({ ref }: FilterSettingsModalProps) => {
 							</label>
 							<select
 								className="h-7 w-fit rounded-md bg-neutral-800 px-2 text-sm font-semibold outline-none"
-								defaultValue={1}
+								value={filter?.requiredField}
 								id="required_field"
 							>
-								<option value={1} className="bg-white">
+								<option value={"both"} className="bg-white">
 									both
 								</option>
-								<option value={1} className="bg-white">
+								<option value={"extensions"} className="bg-white">
 									extensions
 								</option>
-								<option value={1} className="bg-white">
+								<option value={"patterns"} className="bg-white">
 									patterns
 								</option>
 							</select>

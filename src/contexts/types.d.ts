@@ -1,4 +1,5 @@
 export interface FilterCriteria {
+	name: string;
 	directoryPath: string;
 	fileExtensions: string[];
 	// searchPatterns: {
@@ -26,8 +27,13 @@ export interface AppStore {
 		fileList: string[][];
 	};
 	userProfiles: {
-		profileList: ProfileList[];
+		profileList?: ProfileList[];
 		selectedProfile: number;
+	};
+	filterSettings: {
+		profile?: ProfileList;
+		currentProfile: number;
+		currentFilter: number;
 	};
 }
 

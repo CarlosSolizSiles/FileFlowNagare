@@ -1,8 +1,7 @@
-import { use } from "react";
-import AppContext from "@/contexts/AppContext";
+import useAppContext from "./useAppContext";
 
 const useRouter = () => {
-	const { router } = use(AppContext);
+	const router = useAppContext("router");
 	return router;
 };
 

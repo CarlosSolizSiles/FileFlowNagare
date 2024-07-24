@@ -3,6 +3,7 @@
 		"name": "Classify Documents 1",
 		"filters": [
 			{
+				"name": "Imagenes",
 				"directoryPath": "path/to/Imagenes",
 				"fileExtensions": [".png", ".jpg", ".webp"],
 				"searchPatterns": [
@@ -17,6 +18,7 @@
 		"name": "Classify Documents 2",
 		"filters": [
 			{
+				"name": "Imagenes",
 				"directoryPath": "path/to/Imagenes",
 				"fileExtensions": [".png", ".jpg", ".webp"],
 				"searchPatterns": [
@@ -26,15 +28,17 @@
 				"requiredField": "extensions"
 			},
 			{
+				"name": "Documentos",
 				"directoryPath": "path/to/Documentos",
 				"fileExtensions": [".txt", ".pdf", ".docx", ".doc"],
 				"searchPatterns": [
 					"\\d{4}-\\d{2}-\\d{2}",
 					"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
 				],
-				"requiredField": "extensions"
+				"requiredField": "both"
 			},
 			{
+				"name": "Video",
 				"directoryPath": "path/to/Video",
 				"fileExtensions": [".mp4"],
 				"searchPatterns": [
@@ -44,6 +48,7 @@
 				"requiredField": "extensions"
 			},
 			{
+				"name": "Zip",
 				"directoryPath": "path/to/Zip",
 				"fileExtensions": [".rar", ".zip"],
 				"searchPatterns": [
@@ -58,6 +63,7 @@
 		"name": "Classify Documents 3",
 		"filters": [
 			{
+				"name": "Imagenes",
 				"directoryPath": "path/to/Imagenes",
 				"fileExtensions": [".png", ".jpg", ".webp"],
 				"searchPatterns": [
@@ -67,6 +73,7 @@
 				"requiredField": "extensions"
 			},
 			{
+				"name": "Documentos",
 				"directoryPath": "path/to/Documentos",
 				"fileExtensions": [".txt", ".pdf", ".docx", ".doc"],
 				"searchPatterns": [
@@ -76,6 +83,7 @@
 				"requiredField": "extensions"
 			},
 			{
+				"name": "Video",
 				"directoryPath": "path/to/Video",
 				"fileExtensions": [".mp4"],
 				"searchPatterns": [
@@ -85,6 +93,7 @@
 				"requiredField": "extensions"
 			},
 			{
+				"name": "Zip",
 				"directoryPath": "path/to/Zip",
 				"fileExtensions": [".rar", ".zip"],
 				"searchPatterns": [

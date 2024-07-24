@@ -27,7 +27,7 @@ const FilterControls = ({
 				<select
 					className="h-7 w-48 rounded-md bg-neutral-700 px-2 text-sm font-semibold outline-none"
 					defaultValue={selectedProfile}
-					disabled={profileList.length === 0}
+					disabled={profileList?.length === 0}
 					onChange={(e) => {
 						// console.log();
 
@@ -35,7 +35,7 @@ const FilterControls = ({
 					}}
 				>
 					<optgroup label="Select a Profile" className="bg-white italic">
-						{profileList.map(({ name }, index) => {
+						{profileList?.map(({ name }, index) => {
 							return (
 								<option key={index} value={index}>
 									{name}

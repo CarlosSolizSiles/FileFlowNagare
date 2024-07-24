@@ -1,25 +1,31 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Button from "./Button";
+import useFilterSettings from "@/hooks/useFilterSettings";
 
-// fileExtensions: string[];
-// searchPatterns: {
-//  description: string;
-//  regexPattern: string;
-// }[];
+type RenderItems = (
+	items: string[],
+	type: "fileExtensions" | "searchPatterns",
+	placeholder: string,
+) => React.JSX.Element;
+
+type HandleBlur = (
+	e: React.ChangeEvent<HTMLInputElement>,
+	index: number,
+	type: "fileExtensions" | "searchPatterns",
+) => void;
 
 const NavigationPanel = () => {
+	const { profile, currentFilter } = useFilterSettings();
+	const [isExtensionsTab, setIsExtensionsTab] = useState(true);
+
+	const filter = profile?.filters.at(currentFilter);
+
 	const [{ fileExtensions, searchPatterns }, setData] = useState({
 		fileExtensions: ["png"],
 		searchPatterns: ["\\d{4}-\\d{2}-\\d{2}"],
 	});
-	const [inputValue, setInputValue] = useState("");
-	const [isExtensionsTab, setIsExtensionsTab] = useState(true);
 
-	const handleBlur = (
-		e: React.ChangeEvent<HTMLInputElement>,
-		index: number,
-		type: "fileExtensions" | "searchPatterns",
-	) => {
+	const handleBlur: HandleBlur = (e, index, type) => {
 		const target = e.target;
 		if (target.value.includes("</>")) {
 			setData((prevState) => {
@@ -51,22 +57,19 @@ const NavigationPanel = () => {
 		e: React.KeyboardEvent<HTMLInputElement>,
 		type: "fileExtensions" | "searchPatterns",
 	) => {
-		if (e.key === "Enter" && !["", " "].includes(inputValue)) {
-			setInputValue("");
+		let value = (e.target as HTMLInputElement).value;
+		if (e.key === "Enter" && !["", " "].includes(value)) {
 			setData((prevState) => ({
 				...prevState,
-				[type]: [...prevState[type], inputValue],
+				[type]: [...prevState[type], value],
 			}));
+			(e.target as HTMLInputElement).value = "";
 		}
 	};
 
-	const renderItems = (
-		items: string[],
-		type: "fileExtensions" | "searchPatterns",
-		placeholder: string,
-	) => (
+	const renderItems: RenderItems = (items, type, placeholder) => (
 		<>
-			{items.map((item, index) => (
+			{items?.map((item, index) => (
 				<span key={index}>
 					<input
 						className="h-6 w-full bg-transparent outline-none"
@@ -82,8 +85,6 @@ const NavigationPanel = () => {
 					className="h-6 w-full bg-transparent outline-none placeholder:text-neutral-200/20"
 					spellCheck="false"
 					placeholder={placeholder}
-					value={inputValue}
-					onChange={(e) => setInputValue(e.target.value)}
 					onKeyDown={(e) => handleAddNewItem(e, type)}
 				/>
 			</span>
@@ -105,7 +106,7 @@ const NavigationPanel = () => {
 				>
 					{isExtensionsTab &&
 						renderItems(
-							fileExtensions,
+							filter?.fileExtensions ?? [],
 							"fileExtensions",
 							"añadir una nueva extensión",
 						)}
@@ -117,29 +118,17 @@ const NavigationPanel = () => {
 				>
 					{!isExtensionsTab &&
 						renderItems(
-							searchPatterns,
+							filter?.searchPatterns ?? [],
 							"searchPatterns",
 							"añadir un nuevo patrón",
 						)}
 				</div>
 			</main>
 			<footer className="grid h-8 w-full grid-cols-2 grid-rows-1 place-items-center bg-neutral-400">
-				<Button
-					className="w-full"
-					onClick={() => {
-						setInputValue("");
-						setIsExtensionsTab(true);
-					}}
-				>
+				<Button className="w-full" onClick={() => setIsExtensionsTab(true)}>
 					Extensiones
 				</Button>
-				<Button
-					className="w-full"
-					onClick={() => {
-						setInputValue("");
-						setIsExtensionsTab(false);
-					}}
-				>
+				<Button className="w-full" onClick={() => setIsExtensionsTab(false)}>
 					Patrones
 				</Button>
 			</footer>

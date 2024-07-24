@@ -1,8 +1,7 @@
-import { use } from "react";
-import AppContext from "@/contexts/AppContext";
+import useAppContext from "./useAppContext";
 
 const useNavigation = () => {
-	const { navigation } = use(AppContext);
+	const navigation = useAppContext("navigation");
 	return navigation;
 };
 

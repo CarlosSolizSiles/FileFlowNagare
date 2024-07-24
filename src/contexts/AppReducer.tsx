@@ -5,7 +5,9 @@ type AppAction =
 	| { type: "SET_FILE_LIST"; payload: string[][] }
 	| { type: "UPDATE_NAVIGATION_PATH"; payload: string }
 	| { type: "NAVIGATE_BACK"; payload: number }
-	| { type: "CHANGE_PROFILE"; payload: number };
+	| { type: "CHANGE_PROFILE"; payload: number }
+	| { type: "SET_PROFILE"; payload: number }
+	| { type: "CHANGE_FILTER"; payload: number };
 
 // Reducer
 const appReducer = (state: AppStore, action: AppAction): AppStore => {
@@ -44,6 +46,23 @@ const appReducer = (state: AppStore, action: AppAction): AppStore => {
 				userProfiles: {
 					selectedProfile: action.payload,
 					profileList: state.userProfiles.profileList,
+				},
+			};
+		case "SET_PROFILE":
+			return {
+				...state,
+				filterSettings: {
+					profile: state.userProfiles.profileList?.at(action.payload),
+					currentProfile: action.payload,
+					currentFilter: 0,
+				},
+			};
+		case "CHANGE_FILTER":
+			return {
+				...state,
+				filterSettings: {
+					...state.filterSettings,
+					currentFilter: action.payload,
 				},
 			};
 

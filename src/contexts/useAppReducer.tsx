@@ -19,10 +19,17 @@ const initialState: AppStore = {
 	},
 	userProfiles: {
 		profileList: profileData as ProfileList[],
-		selectedProfile: 1,
+		selectedProfile: 0,
 	},
 	fileSystem: {
 		fileList: [],
+	},
+	filterSettings: {
+		profile: {
+			...(profileData.at(0) as ProfileList),
+		},
+		currentProfile: 0,
+		currentFilter: 0,
 	},
 };
 
@@ -44,28 +51,33 @@ const useAppReducer = () => {
 		startTransition(refreshDirectoryContents);
 	};
 
+	// ! USER PROFILE
+	const switchProfile = (selectedProfile: number) => {
+		dispatch({ type: "CHANGE_PROFILE", payload: selectedProfile });
+	};
+
 	// ! NAVIGATION DIRECTORY
 	const updateNavigationPath = (folder: string) =>
 		dispatch({ type: "UPDATE_NAVIGATION_PATH", payload: folder });
 	const navigateBackByLevels = (levels: number) =>
 		dispatch({ type: "NAVIGATE_BACK", payload: levels });
 
-	// ! USER_PROFILE
-	const switchProfile = (selectedProfile: number) => {
-		dispatch({ type: "CHANGE_PROFILE", payload: selectedProfile });
+	// ! FILTER SETTINGS
+	const setProfile = (index: number) => {
+		dispatch({ type: "SET_PROFILE", payload: index });
+	};
+	const changeFilter = (index: number) => {
+		dispatch({ type: "CHANGE_FILTER", payload: index });
 	};
 
 	useEffect(() => {
-		const id = setTimeout(() => {
-			refreshDirectoryContentsWithTransition();
-		}, 0);
+		const id = setTimeout(refreshDirectoryContentsWithTransition, 0);
 		return () => {
 			clearTimeout(id);
 		};
 	}, [state.navigation]);
 
 	return {
-		// ...state,
 		router: {
 			...state.router,
 			navigateToRoute,
@@ -81,14 +93,14 @@ const useAppReducer = () => {
 			isTransitionPending,
 		},
 		userProfiles: {
-			switchProfile,
 			...state.userProfiles,
-		}, // userProfiles
-
-		// addFile,
-		// removeFile,
-		// updateSettings,
-		// logActivity,
+			switchProfile,
+		},
+		filterSettings: {
+			...state.filterSettings,
+			setProfile,
+			changeFilter,
+		},
 	};
 };
 

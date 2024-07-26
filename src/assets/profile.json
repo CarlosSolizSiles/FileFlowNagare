@@ -1,106 +1,23 @@
 [
 	{
-		"name": "Classify Documents 1",
+		"name": "Clasificar Imagenes",
 		"filters": [
 			{
-				"name": "Imagenes",
-				"directoryPath": "path/to/Imagenes",
-				"fileExtensions": [".png", ".jpg", ".webp"],
-				"searchPatterns": [
-					"\\d{4}-\\d{2}-\\d{2}",
-					"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
-				],
-				"requiredField": "extensions"
-			}
-		]
-	},
-	{
-		"name": "Classify Documents 2",
-		"filters": [
-			{
-				"name": "Imagenes",
-				"directoryPath": "path/to/Imagenes",
-				"fileExtensions": [".png", ".jpg", ".webp"],
-				"searchPatterns": [
-					"\\d{4}-\\d{2}-\\d{2}",
-					"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
-				],
-				"requiredField": "extensions"
+				"name": "Humanos",
+				"directoryPath": "E:/organizador_imagens/Humanos",
+				"fileExtensions": [".png", ".jpg", ".webp", ".zip"],
+				"searchPatterns": ["mujer", "hombre"],
+				"requiredField": "both"
 			},
 			{
-				"name": "Documentos",
-				"directoryPath": "path/to/Documentos",
-				"fileExtensions": [".txt", ".pdf", ".docx", ".doc"],
+				"name": "Dibujos",
+				"directoryPath": "E:/organizador_imagens/Dibujos",
+				"fileExtensions": [".png", ".jpg", ".webp"],
 				"searchPatterns": [
 					"\\d{4}-\\d{2}-\\d{2}",
 					"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
 				],
 				"requiredField": "both"
-			},
-			{
-				"name": "Video",
-				"directoryPath": "path/to/Video",
-				"fileExtensions": [".mp4"],
-				"searchPatterns": [
-					"\\d{4}-\\d{2}-\\d{2}",
-					"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
-				],
-				"requiredField": "extensions"
-			},
-			{
-				"name": "Zip",
-				"directoryPath": "path/to/Zip",
-				"fileExtensions": [".rar", ".zip"],
-				"searchPatterns": [
-					"\\d{4}-\\d{2}-\\d{2}",
-					"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
-				],
-				"requiredField": "extensions"
-			}
-		]
-	},
-	{
-		"name": "Classify Documents 3",
-		"filters": [
-			{
-				"name": "Imagenes",
-				"directoryPath": "path/to/Imagenes",
-				"fileExtensions": [".png", ".jpg", ".webp"],
-				"searchPatterns": [
-					"\\d{4}-\\d{2}-\\d{2}",
-					"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
-				],
-				"requiredField": "extensions"
-			},
-			{
-				"name": "Documentos",
-				"directoryPath": "path/to/Documentos",
-				"fileExtensions": [".txt", ".pdf", ".docx", ".doc"],
-				"searchPatterns": [
-					"\\d{4}-\\d{2}-\\d{2}",
-					"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
-				],
-				"requiredField": "extensions"
-			},
-			{
-				"name": "Video",
-				"directoryPath": "path/to/Video",
-				"fileExtensions": [".mp4"],
-				"searchPatterns": [
-					"\\d{4}-\\d{2}-\\d{2}",
-					"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
-				],
-				"requiredField": "extensions"
-			},
-			{
-				"name": "Zip",
-				"directoryPath": "path/to/Zip",
-				"fileExtensions": [".rar", ".zip"],
-				"searchPatterns": [
-					"\\d{4}-\\d{2}-\\d{2}",
-					"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
-				],
-				"requiredField": "extensions"
 			}
 		]
 	}

@@ -5,6 +5,7 @@ import useNavigation from "@/hooks/useNavigation";
 const NavigationDirectory = () => {
 	const { level, path, navigateBackByLevels } = useNavigation();
 	const paths = path.split("\\").slice(level);
+	
 	return (
 		<div className="flex h-8 content-center items-center rounded-md bg-neutral-700 px-4 text-lg font-bold shadow-lg">
 			{paths.map((path, index) => (

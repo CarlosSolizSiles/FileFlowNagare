@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Button from "./Button";
 import useFilterSettings from "@/hooks/useFilterSettings";
 
-type RenderItems = (
-	items: string[],
-	type: "fileExtensions" | "searchPatterns",
-	placeholder: string,
-) => React.JSX.Element;
+type PropsRenderItems = {
+	items: string[];
+	type: "fileExtensions" | "searchPatterns";
+	placeholder: string;
+};
 
 type HandleBlur = (
 	e: React.ChangeEvent<HTMLInputElement>,
@@ -15,34 +15,39 @@ type HandleBlur = (
 ) => void;
 
 const NavigationPanel = () => {
-	const { profile, currentFilter } = useFilterSettings();
-	const [isExtensionsTab, setIsExtensionsTab] = useState(true);
+	const {
+		profile,
+		currentFilter,
+		addItem,
+		deleteItem,
+		editItem
+	} = useFilterSettings();
 
 	const filter = profile?.filters.at(currentFilter);
 
-	const [{ fileExtensions, searchPatterns }, setData] = useState({
-		fileExtensions: ["png"],
-		searchPatterns: ["\\d{4}-\\d{2}-\\d{2}"],
-	});
+	const [isExtensionsTab, setIsExtensionsTab] = useState(true);
+
+	// useEffect(() => {
+	// 	console.log(profile?.filters.at(currentFilter));
+
+	// 	setFilter(profile?.filters.at(currentFilter));
+	// }, [profile, currentFilter]);
 
 	const handleBlur: HandleBlur = (e, index, type) => {
 		const target = e.target;
 		if (target.value.includes("</>")) {
-			setData((prevState) => {
-				let updatedValue = target.value.replaceAll("</>", "");
-				if (!["", " "].includes(updatedValue)) {
-					prevState[type][index] = updatedValue;
-					target.value = updatedValue;
-				} else {
-					prevState[type].splice(index, 1);
-				}
-				return { ...prevState };
-			});
+			let updatedValue = target.value.replaceAll("</>", "");
+			if (!["", " "].includes(updatedValue)) {
+				editItem(type, index, updatedValue);
+				target.value = updatedValue;
+			} else {
+				deleteItem(type, index);
+			}
 		} else {
 			target.value =
 				type === "fileExtensions"
-					? fileExtensions[index]
-					: searchPatterns[index];
+					? (filter?.fileExtensions ?? [])[index]
+					: (filter?.searchPatterns ?? [])[index];
 		}
 	};
 
@@ -59,15 +64,13 @@ const NavigationPanel = () => {
 	) => {
 		let value = (e.target as HTMLInputElement).value;
 		if (e.key === "Enter" && !["", " "].includes(value)) {
-			setData((prevState) => ({
-				...prevState,
-				[type]: [...prevState[type], value],
-			}));
+			addItem(type, value);
+
 			(e.target as HTMLInputElement).value = "";
 		}
 	};
 
-	const renderItems: RenderItems = (items, type, placeholder) => (
+	const RenderItems = ({ items, type, placeholder }: PropsRenderItems) => (
 		<>
 			{items?.map((item, index) => (
 				<span key={index}>
@@ -104,24 +107,26 @@ const NavigationPanel = () => {
 						isExtensionsTab ? "overflow-auto" : "overflow-hidden"
 					}`}
 				>
-					{isExtensionsTab &&
-						renderItems(
-							filter?.fileExtensions ?? [],
-							"fileExtensions",
-							"añadir una nueva extensión",
-						)}
+					{isExtensionsTab && (
+						<RenderItems
+							items={filter?.fileExtensions ?? []}
+							placeholder="añadir una nueva extensión"
+							type="fileExtensions"
+						></RenderItems>
+					)}
 				</div>
 				<div
 					className={`scrollbar grid h-min max-h-full w-full gap-1 divide-y-[1px] divide-neutral-500 px-2 py-1 ${
 						isExtensionsTab ? "overflow-hidden" : "overflow-auto"
 					}`}
 				>
-					{!isExtensionsTab &&
-						renderItems(
-							filter?.searchPatterns ?? [],
-							"searchPatterns",
-							"añadir un nuevo patrón",
-						)}
+					{!isExtensionsTab && (
+						<RenderItems
+							items={filter?.searchPatterns ?? []}
+							placeholder="añadir un nuevo patrón"
+							type="searchPatterns"
+						></RenderItems>
+					)}
 				</div>
 			</main>
 			<footer className="grid h-8 w-full grid-cols-2 grid-rows-1 place-items-center bg-neutral-400">

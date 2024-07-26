@@ -1,3 +1,6 @@
+export type TypeItem = "fileExtensions" | "searchPatterns";
+export type TypeRequiredField = "both" | "extensions" | "patterns";
+
 export interface FilterCriteria {
 	name: string;
 	directoryPath: string;
@@ -7,7 +10,7 @@ export interface FilterCriteria {
 	// 	regexPattern: string;
 	// }[];
 	searchPatterns: string[];
-	requiredField: "both" | "extensions" | "patterns";
+	requiredField: TypeRequiredField;
 }
 
 export interface ProfileList {
@@ -25,6 +28,7 @@ export interface AppStore {
 	};
 	fileSystem: {
 		fileList: string[][];
+		selectTargetFile?: number;
 	};
 	userProfiles: {
 		profileList?: ProfileList[];

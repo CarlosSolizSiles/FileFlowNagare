@@ -10,8 +10,8 @@ import History from "@/pages/History";
 import Settings from "@/pages/Settings";
 
 const Router = () => {
-	const { current: currentRoute } = useRouter();
-	const MathRouters = [Home, FileOrganizer, History, Settings][currentRoute];
+	const { current } = useRouter();
+	const MathRouters = [Home, FileOrganizer, History, Settings][current];
 
 	return <MathRouters></MathRouters>;
 };

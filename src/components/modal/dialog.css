@@ -10,9 +10,11 @@
 		0 4px 6px -4px rgb(0 0 0 / 0.1);
 
 	transform: translateY(calc(50% + 50vh));
+	opacity: 0;
 	transition:
 		display 500ms,
 		overlay 500ms,
+		opacity 500ms,
 		transform 500ms;
 
 	transition-timing-function: linear;
@@ -20,13 +22,14 @@
 
 	&[open] {
 		transform: translateY(0%);
-
+		opacity: 1;
 		&::backdrop {
 			opacity: 1;
 		}
 
 		@starting-style {
 			transform: translateY(calc(50% + 50vh));
+			opacity: 0;
 			&::backdrop {
 				opacity: 0;
 			}

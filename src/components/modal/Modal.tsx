@@ -5,11 +5,19 @@ interface Props {
 	ref?: React.RefObject<HTMLDialogElement | null>;
 	children?: React.ReactNode;
 	className?: string | undefined;
+	backdrop?: "enable" | "disabled";
 	onKeyDown?: (e: React.KeyboardEvent<HTMLDialogElement>) => void;
 	onBlur?: (e: React.FocusEvent<HTMLDialogElement, Element>) => void;
 }
 
-const Modal = ({ className, ref, children, onKeyDown, onBlur }: Props) => {
+const Modal = ({
+	className,
+	ref,
+	children,
+	onKeyDown,
+	onBlur,
+	backdrop,
+}: Props) => {
 	const modal = ref ?? useRef<HTMLDialogElement>(null);
 
 	const handleOnClick = (
@@ -17,7 +25,10 @@ const Modal = ({ className, ref, children, onKeyDown, onBlur }: Props) => {
 	) => {
 		let target = e.target as Element;
 
-		if (target.tagName === "DIALOG") {
+		if (
+			target.tagName === "DIALOG" &&
+			target.getAttribute("modal-backdrop") === "enable"
+		) {
 			modal.current?.close();
 		}
 
@@ -33,6 +44,7 @@ const Modal = ({ className, ref, children, onKeyDown, onBlur }: Props) => {
 			onClick={handleOnClick}
 			onKeyDown={onKeyDown}
 			onBlur={onBlur}
+			modal-backdrop={backdrop}
 		>
 			{children}
 		</dialog>

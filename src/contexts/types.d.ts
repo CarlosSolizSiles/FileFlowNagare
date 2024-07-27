@@ -18,27 +18,33 @@ export interface ProfileList {
 	filters: FilterCriteria[];
 }
 
+interface Router {
+	current: number;
+}
+interface Navigation {
+	path: string;
+	level: number;
+}
+interface FileSystem {
+	fileList: string[][];
+	selectTargetFile?: number;
+}
+interface UserProfiles {
+	profileList?: ProfileList[];
+	selectedProfile: number;
+}
+interface FilterSettings {
+	profile?: ProfileList;
+	currentProfile: number;
+	currentFilter: number;
+}
+
 export interface AppStore {
-	router: {
-		current: number;
-	};
-	navigation: {
-		path: string;
-		level: number;
-	};
-	fileSystem: {
-		fileList: string[][];
-		selectTargetFile?: number;
-	};
-	userProfiles: {
-		profileList?: ProfileList[];
-		selectedProfile: number;
-	};
-	filterSettings: {
-		profile?: ProfileList;
-		currentProfile: number;
-		currentFilter: number;
-	};
+	router: Router;
+	navigation: Navigation;
+	fileSystem: FileSystem;
+	userProfiles: UserProfiles;
+	filterSettings: FilterSettings;
 }
 
 // let a = [

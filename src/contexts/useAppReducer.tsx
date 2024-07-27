@@ -15,7 +15,7 @@ if (!localStorage.profileData) {
 // Initial state
 const initialState: AppStore = {
 	router: {
-		current: 1,
+		current: 3,
 	},
 	navigation: {
 		path: "D:\\User\\Fordread\\Downloads",
@@ -40,7 +40,7 @@ const useAppReducer = () => {
 	const [isTransitionPending, startTransition] = useTransition();
 
 	// ! ROUTER
-	const navigateToRoute = (route: number) =>
+	const navigateTo = (route: number) =>
 		dispatch({ type: "NAVIGATE_TO_PAGE", payload: route });
 
 	// ! FILE SYSTEM
@@ -102,7 +102,7 @@ const useAppReducer = () => {
 	return {
 		router: {
 			...state.router,
-			navigateToRoute,
+			navigateTo,
 		},
 		navigation: {
 			...state.navigation,

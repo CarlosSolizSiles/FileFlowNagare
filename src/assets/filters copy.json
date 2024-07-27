@@ -1,0 +1,10 @@
+[
+	{
+		"directoryPath": "path/to/Imagenes",
+		"searchPatterns": [
+			"\\d{4}-\\d{2}-\\d{2}",
+			"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+		],
+		"requiredField": "extensions"
+	}
+]

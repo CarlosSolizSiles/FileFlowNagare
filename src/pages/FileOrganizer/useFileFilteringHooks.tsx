@@ -12,7 +12,7 @@ const useFileFilteringHooks = () => {
 	const { fileList } = useFileSystem();
 	const [{ info, allFiles, currentFilterIndex }, setState] = useState<AppStore>(
 		{
-			info: profileList[selectedProfile].filters.map((criteria) => ({
+			info: profileList?.at(selectedProfile).filters.map((criteria) => ({
 				nameFolder: criteria.directoryPath.split("/").pop()!,
 				matchedFiles: [],
 			})),
@@ -23,7 +23,7 @@ const useFileFilteringHooks = () => {
 
 	useEffect(() => {
 		setState({
-			info: profileList[selectedProfile].filters.map((criteria) => ({
+			info: profileList?.at(selectedProfile)?.filters.map((criteria) => ({
 				nameFolder: criteria.directoryPath.split("/").pop()!,
 				matchedFiles: [],
 			})),

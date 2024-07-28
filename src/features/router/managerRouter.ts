@@ -10,7 +10,7 @@ const initialState: RouterState = {
 };
 
 export const managerRouter = createSlice({
-	name: "counter",
+	name: "router",
 	initialState,
 	reducers: {
 		navigateTo: (state, action: PayloadAction<number>) => {

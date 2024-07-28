@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+// Hooks
+import useProfile from "@/hooks/useProfile";
+
 // Componentes
 import InputTextComponent from "@/components/InputText";
 import ModalComponent from "@/components/modal/Modal";
@@ -16,16 +19,21 @@ import {
 } from "react-icons/io5";
 
 const SettingsPage = () => {
+	const {
+		isEmptylist,
+		profileList,
+		selectedIndex,
+		switchProfile,
+		add,
+		edit,
+		remove,
+	} = useProfile();
+
 	const modalDialogRef = useRef<HTMLDialogElement>(null);
 	const inputElementRef = useRef<HTMLInputElement>(null);
-	const [profileList, setProfileList] = useState(
-		[...Array(5)].map((_, i) => `Profile ${i}`),
-	);
-	const [selectedProfileIndex, setSelectedProfileIndex] = useState<
-		number | undefined
-	>();
 	const [isEditingProfile, setIsEditingProfile] = useState<boolean>(false);
 	const [isAddingProfile, setIsAddingProfile] = useState<boolean>(false);
+	const [enableInputElement, setEnableInputElement] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (isEditingProfile || isAddingProfile) inputElementRef.current?.focus();
@@ -40,32 +48,24 @@ const SettingsPage = () => {
 	};
 
 	const handleEditProfile = () => {
-		if (selectedProfileIndex !== undefined) {
-			setIsEditingProfile(true);
-			setIsAddingProfile(false);
+		if (selectedIndex !== undefined) {
+			setEnableInputElement(true);
+			// setIsEditingProfile(true);
+			// setIsAddingProfile(false);
 		}
 	};
 
 	const handleDeleteProfile = () => {
-		if (selectedProfileIndex !== undefined && !isAddingProfile) {
-			setProfileList((prevState) => {
-				const newProfileList = [...prevState];
-				newProfileList.splice(selectedProfileIndex, 1);
-				return newProfileList;
-			});
-			setSelectedProfileIndex(undefined);
+		if (selectedIndex !== undefined && !isAddingProfile) {
+			remove(selectedIndex);
 		}
 	};
 
 	const handleInputKeyDown = (text: string) => {
 		if (isAddingProfile) {
-			setProfileList((prevState) => [...prevState, text]);
-		} else if (selectedProfileIndex !== undefined) {
-			setProfileList((prevState) => {
-				const newProfileList = [...prevState];
-				newProfileList[selectedProfileIndex] = text;
-				return newProfileList;
-			});
+			add(text);
+		} else if (selectedIndex !== undefined) {
+			edit(selectedIndex, text);
 		}
 	};
 
@@ -121,23 +121,23 @@ const SettingsPage = () => {
 			<div className="flex h-fit bg-red-200/0">
 				<div className="flex flex-1 bg-blue-400/0">
 					<SelectComponent
-						disabled={profileList.length === 0}
-						value={selectedProfileIndex}
+						disabled={isEmptylist}
+						value={selectedIndex}
 						listOptions={profileList}
-						onChange={(e) => setSelectedProfileIndex(e)}
+						onChange={switchProfile}
 						hidden={isEditingProfile || isAddingProfile}
 					/>
 
 					<InputTextComponent
 						ref={inputElementRef}
 						onChange={() => {}}
-						onKeyDown={(e) => handleInputKeyDown(e)}
+						onKeyDown={handleInputKeyDown}
 						onBlur={handleInputBlur}
 						value={
 							isAddingProfile
 								? ""
-								: selectedProfileIndex !== undefined
-									? profileList[selectedProfileIndex]
+								: selectedIndex !== undefined
+									? profileList[selectedIndex]
 									: "Select a Profile"
 						}
 						placeholder={
@@ -154,7 +154,7 @@ const SettingsPage = () => {
 						<button
 							type="button"
 							role="button"
-							className="aspect-square size-8 rounded-md p-1 shadow-md"
+							className="aspect-square size-8 rounded-md p-1 shadow-md disabled:text-red-500"
 							onClick={handleAddProfile}
 						>
 							<IoAddOutline className="size-full" />
@@ -164,8 +164,8 @@ const SettingsPage = () => {
 						<button
 							type="button"
 							role="button"
-							className="aspect-square size-8 rounded-md p-1 shadow-md"
-							disabled={profileList.length === 0}
+							className="aspect-square size-8 rounded-md p-1 shadow-md disabled:text-red-500"
+							disabled={isEmptylist}
 							onClick={handleDeleteProfile}
 						>
 							<IoTrashBinOutline className="size-full" />
@@ -175,8 +175,8 @@ const SettingsPage = () => {
 						<button
 							type="button"
 							role="button"
-							className="aspect-square size-8 rounded-md p-1 shadow-md"
-							disabled={profileList.length === 0}
+							className="aspect-square size-8 rounded-md p-1 shadow-md disabled:text-red-500"
+							disabled={isEmptylist}
 							onClick={handleEditProfile}
 						>
 							<IoBrushOutline className="size-full" />

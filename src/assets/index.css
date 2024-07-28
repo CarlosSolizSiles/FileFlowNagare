@@ -11,8 +11,8 @@ body {
 		color-mix(in srgb, theme("colors.neutral.800") 95%, transparent),
 		theme("colors.neutral.800")
 	);
-	color: light-dark(theme("colors.gray.500"), theme("colors.neutral.800"));
-	@apply select-none max-h-screen h-screen overflow-hidden;
+	color: light-dark(theme("colors.neutral.800"), theme("colors.gray.400"));
+	@apply h-screen max-h-screen select-none overflow-hidden;
 }
 
 @keyframes animate_loading {

@@ -1,35 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface CounterState {
-	value: number;
+export interface ProfileState {
+	profileList: string[];
+	selectedIndex: number | undefined;
 }
 
-const initialState: CounterState = {
-	value: 0,
+const initialState: ProfileState = {
+	profileList: [...Array(5)].map((_, i) => `Profile ${i}`),
+	selectedIndex: undefined,
 };
 
 export const managerProfile = createSlice({
-	name: "counter",
+	name: "profile",
 	initialState,
 	reducers: {
-		increment: (state) => {
-			// Redux Toolkit allows us to write "mutating" logic in reducers. It
-			// doesn't actually mutate the state because it uses the Immer library,
-			// which detects changes to a "draft state" and produces a brand new
-			// immutable state based off those changes
-			state.value += 1;
+		switchProfile: (state, action: PayloadAction<number>) => {
+			state.selectedIndex = action.payload;
 		},
-		decrement: (state) => {
-			state.value -= 1;
+		add: (state, action: PayloadAction<string>) => {
+			state.profileList.push(action.payload);
 		},
-		incrementByAmount: (state, action: PayloadAction<number>) => {
-			state.value += action.payload;
+		remove: (state, action: PayloadAction<number>) => {
+			state.profileList.splice(action.payload, 1);
+			state.selectedIndex = undefined;
+		},
+		edit: (state, action: PayloadAction<{ index: number; name: string }>) => {
+			state.profileList[action.payload.index] = action.payload.name;
 		},
 	},
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = managerProfile.actions;
+export const { switchProfile, add, remove, edit } = managerProfile.actions;
 
 export default managerProfile.reducer;

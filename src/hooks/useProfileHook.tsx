@@ -36,13 +36,7 @@ const useProfileHook = () => {
 					break;
 			}
 		},
-		switchProfile: (index: number) => dispatch(switchProfile(index)),
-		addProfile: (name: string) => dispatch(addProfile(name)),
-		deleteProfile: (index: number) => dispatch(deleteProfile(index)),
-		editProfile: (index: number, name: string) =>
-			dispatch(editProfile({ index, name })),
 		...state,
-		isEmptyProfileList: state.profileList.length === 0,
 	};
 };
 

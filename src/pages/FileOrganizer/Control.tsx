@@ -25,30 +25,14 @@ interface ControlProps {
 	event: (action: ActionsEvent) => void;
 }
 
-const Control = ({
-	selectedIndex: select,
-	list: array,
-	placeholder,
-	event,
-}: ControlProps) => {
+const Control = ({ selectedIndex, list, placeholder, event }: ControlProps) => {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [{ list, selectedIndex }, setStore] = useState({
-		selectedIndex: select,
-		list: array,
-	});
 
 	const [state, setState] = useState({
 		isEditing: false,
 		isInputEnabled: false,
 		isButtonHovered: false,
 	});
-
-	useEffect(() => {
-		setStore({
-			selectedIndex: select,
-			list: array,
-		});
-	}, [list, selectedIndex]);
 
 	const { isEditing, isInputEnabled, isButtonHovered } = state;
 
@@ -71,10 +55,6 @@ const Control = ({
 	const handleDelete = () => {
 		if (selectedIndex !== undefined) {
 			event({ type: "delete", payload: selectedIndex });
-			setStore({
-				selectedIndex: select,
-				list: array,
-			});
 		}
 	};
 
@@ -84,18 +64,10 @@ const Control = ({
 				type: "edit",
 				payload: { index: selectedIndex, name: text },
 			});
-			setStore({
-				selectedIndex: select,
-				list: array,
-			});
 		} else {
 			event({
 				type: "add",
 				payload: text,
-			});
-			setStore({
-				selectedIndex: select,
-				list: array,
 			});
 		}
 		setState({ ...state, isButtonHovered: false, isInputEnabled: false });
@@ -116,17 +88,12 @@ const Control = ({
 			type: "switch",
 			payload: value,
 		});
-		setStore({
-			selectedIndex: select,
-			list: array,
-		});
 	};
-	
-	console.log(list);
+
 	return (
 		<>
 			<Select
-				disabled={list.length === 0 || selectedIndex === undefined}
+				disabled={list.length === 0}
 				value={selectedIndex}
 				listOptions={list}
 				onChange={handleSwitch}

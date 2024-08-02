@@ -7,11 +7,11 @@ import useRouter from "@/hooks/useRouter";
 import Home from "@/pages/Home";
 import FileOrganizer from "@/pages/FileOrganizer";
 import History from "@/pages/History";
-import Settings from "@/pages/Settings";
+import SettingsPage from "@/pages/Settings";
 
 const Router = () => {
 	const { current } = useRouter();
-	const MathRouters = [Home, FileOrganizer, History, Settings][current];
+	const MathRouters = [Home, FileOrganizer, History, SettingsPage][current];
 
 	return <MathRouters></MathRouters>;
 };

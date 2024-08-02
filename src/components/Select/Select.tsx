@@ -7,6 +7,7 @@ interface SelectProps {
 	value?: number;
 	hidden?: boolean;
 	onChange: (value: number) => void;
+	placeholder: string;
 }
 
 const Select = ({
@@ -15,6 +16,7 @@ const Select = ({
 	value,
 	hidden,
 	onChange,
+	placeholder,
 }: SelectProps) => {
 	const [selectedValue, setSelectedValue] = useState<number | undefined>(value);
 	const id = useId();
@@ -30,9 +32,7 @@ const Select = ({
 	};
 
 	const selectedText =
-		selectedValue !== undefined
-			? listOptions.at(selectedValue)
-			: "Seleciona un Perfil";
+		selectedValue !== undefined ? listOptions.at(selectedValue) : placeholder;
 
 	useEffect(() => {
 		setSelectedValue(value);
@@ -85,7 +85,7 @@ const Select = ({
 				<div className="w-full rounded-b-md bg-neutral-700 text-base shadow-lg">
 					{listOptions.map((text, i) => (
 						<div
-							key={text}
+							key={i}
 							className="px-2 font-normal hover:rounded-md hover:bg-amber-300 hover:text-black"
 							data-option-value={i}
 						>

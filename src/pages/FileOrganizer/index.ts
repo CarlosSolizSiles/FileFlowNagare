@@ -1,1 +1,1 @@
-export { default } from "./FileOrganizer";
+export { default } from "./FileOrganizerPage";

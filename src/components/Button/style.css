@@ -1,0 +1,51 @@
+@keyframes animation_select {
+	0% {
+		opacity: 0;
+		top: 0px;
+		scale: 0.85;
+		z-index: -1;
+	}
+	95% {
+		z-index: -1;
+	}
+	100% {
+		opacity: 100;
+		top: 31px;
+		scale: 1;
+	}
+}
+.select_style > input {
+	&:checked {
+		& ~ div {
+			display: block;
+			opacity: 100;
+			top: 31px;
+			scale: 1;
+			z-index: 1;
+			animation: animation_select 150ms linear;
+		}
+	}
+
+	& ~ div {
+		left: 0;
+		position: absolute;
+		transition:
+			display 150ms,
+			overlay 150ms,
+			top 150ms,
+			scale 150ms,
+			opacity 150ms;
+		transition-timing-function: linear;
+		transition-behavior: allow-discrete;
+
+		top: 0px;
+		scale: 0.85;
+		display: none;
+		opacity: 0;
+		z-index: -1;
+
+		padding: 0.5rem;
+	}
+}
+
+/* hidden h-12 w-full bg-red-300 opacity-0 transition-all duration-300 [transition-behavior:allow-discrete] */

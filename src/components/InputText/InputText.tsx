@@ -7,7 +7,7 @@ interface SelectProps {
 	hidden?: boolean;
 	onChange: (value: string) => void;
 	onBlur: () => void;
-	onKeyDown: (text: string) => void;
+	onKeyDown: (text: string) => void | { enableBlur: boolean };
 	ref?: React.RefObject<HTMLInputElement | null>;
 }
 
@@ -43,8 +43,10 @@ const InputText = ({
 				onKeyDown={(e) => {
 					const target = e.target as HTMLInputElement;
 					if (e.key === "Enter" && textValue !== undefined) {
-						onKeyDown(textValue);
-						target.blur();
+						let data = onKeyDown(textValue);
+						if (data === undefined || (data !== undefined && data.enableBlur)) {
+							target.blur();
+						}
 					}
 				}}
 				value={textValue}

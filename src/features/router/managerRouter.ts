@@ -6,7 +6,7 @@ export interface RouterState {
 }
 
 const initialState: RouterState = {
-	current: 3,
+	current: 1,
 };
 
 export const managerRouter = createSlice({

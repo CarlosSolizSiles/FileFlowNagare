@@ -34,6 +34,17 @@ const userProfiles: UserProfile[] = [
 					".(html)$",
 				],
 			},
+			{
+				name: "Trabajos Practicos 2",
+				directory: "./Folder",
+				listType: "whitelist",
+				regexPatterns: [
+					"^((TP n° d-{1}).*)+.(pdf|docx)$",
+					"^((Trabajo Grupal).*)|.(doc)$",
+					"^(Trabajo Escolar)",
+					".(html)$",
+				],
+			},
 		],
 	},
 	{

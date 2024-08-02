@@ -18,8 +18,10 @@ import {
 import { BsDoorClosed as DoorClosedIcon } from "react-icons/bs";
 
 const FileOrganizerPage = () => {
-	const { profileList, selectedProfileIndex, eventProfile } = useProfileHook();
-	const { filterList, eventFilter, selectedFilterIndex } = useCreateFilter();
+	const { profileList, selectedProfileIndex, eventProfile, filterSettings } =
+		useProfileHook();
+	const { filterList, eventFilter, selectedFilterIndex, resetFilter } =
+		useCreateFilter(filterSettings);
 
 	const modalRef = useRef<HTMLDialogElement>(null);
 
@@ -40,8 +42,8 @@ const FileOrganizerPage = () => {
 								<DoorClosedIcon className="h-6 w-6" />
 							</button>
 						</div>
-						<div className="grid flex-1 grid-cols-2 gap-6 bg-red-400/0">
-							<div className="col-span-2 w-full space-y-4">
+						<div className="flex flex-1 flex-col gap-3 bg-red-400/0">
+							<div className="w-full bg-neutral-400/0">
 								<div className="flex flex-1 gap-2 bg-blue-400/0">
 									<Control
 										list={filterList}
@@ -51,15 +53,27 @@ const FileOrganizerPage = () => {
 									></Control>
 								</div>
 							</div>
-							<div className="space-y-4">
-								<div className="space-y-2"></div>
-								<div className="flex space-x-2"></div>
+							<div className="flex-1 bg-neutral-700/40">
+								{selectedFilterIndex !== undefined &&
+									filterSettings
+										?.at(selectedFilterIndex)
+										?.regexPatterns.map((x) => {
+											return <input type=""/>;
+										})}
 							</div>
 						</div>
-						<div className="mt-6 flex justify-end">
+						<div className="mt-6 flex justify-end gap-2">
+							<button
+								type="button"
+								className="rounded-md bg-red-500 p-1 px-4 text-base font-medium text-white shadow-md"
+								onClick={resetFilter}
+							>
+								Cancel Changes
+							</button>
 							<button
 								type="button"
 								className="rounded-md bg-blue-500 p-1 px-4 text-base font-medium text-white shadow-md"
+								onClick={() => {}}
 							>
 								Save Changes
 							</button>

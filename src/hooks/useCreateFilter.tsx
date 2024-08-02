@@ -1,3 +1,4 @@
+import { FilterCriteria } from "@/features/profile/managerProfile";
 import { useState } from "react";
 
 export type ActionsEvent =
@@ -11,9 +12,9 @@ export type StoreFilter = {
 	selectedFilterIndex?: number | undefined;
 };
 
-const useCreateFilter = () => {
+const useCreateFilter = (init_list?: FilterCriteria[]) => {
 	const [storeFilter, setStoreFilter] = useState<StoreFilter>({
-		filterList: [],
+		filterList: init_list?.map(({ name }) => name) ?? [],
 		selectedFilterIndex: undefined,
 	});
 
@@ -44,6 +45,12 @@ const useCreateFilter = () => {
 			return newState;
 		});
 	};
+	const resetFilter = () => {
+		setStoreFilter({
+			filterList: init_list?.map(({ name }) => name) ?? [],
+			selectedFilterIndex: undefined,
+		});
+	};
 
 	return {
 		eventFilter: (action: ActionsEvent) => {
@@ -64,6 +71,7 @@ const useCreateFilter = () => {
 					break;
 			}
 		},
+		resetFilter,
 		...storeFilter,
 	};
 };

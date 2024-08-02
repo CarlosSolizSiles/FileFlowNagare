@@ -39,7 +39,7 @@ const Modal = ({
 
 	return (
 		<dialog
-			className={"dialog " + className}
+			className={"dialog select-none " + className}
 			ref={modal}
 			onClick={handleOnClick}
 			onKeyDown={onKeyDown}
